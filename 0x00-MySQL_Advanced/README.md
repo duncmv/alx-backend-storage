@@ -1,0 +1,1 @@
+Advanced techniques in SQL
