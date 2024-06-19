@@ -10,7 +10,7 @@ def count_calls(method: Callable) -> Callable:
     """Decorator that counts the number of times a method is called"""
 
     @wraps(method)
-    def wrapper(self: 'Cache', *args: Any, **kwargs: Any):
+    def wrapper(self: 'Cache', *args, **kwargs):
         """Wrapper that increments the number of times a method is called"""
         self._redis.incr(method.__qualname__)
         return method(*args, **kwargs)
