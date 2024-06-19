@@ -2,7 +2,7 @@
 """Using Redis as a cache"""
 import redis
 import uuid
-from typing import Union, Callable
+from typing import Union, Callable, Any
 from functools import wraps
 
 
@@ -10,8 +10,8 @@ def count_calls(method: Callable) -> Callable:
     """Decorator that counts the number of times a method is called"""
 
     @wraps(method)
-    def wrapper(self: 'Cache', *args, **kwargs) -> Union[str, bytes,
-                                                         int, float]:
+    def wrapper(self: 'Cache', *args: Any, **kwargs: Any):
+        """Wrapper that increments the number of times a method is called"""
         self._redis.incr(method.__qualname__)
         return method(*args, **kwargs)
 
