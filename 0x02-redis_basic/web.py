@@ -15,11 +15,8 @@ def count_requests(method: Callable) -> Callable:
     def wrapper(url):
         """ Wrapper for decorator """
         redis_.incr(f"count:{url}")
-        cached_html = redis_.get(f"cached:{url}")
-        if cached_html:
-            return cached_html.decode('utf-8')
+        redis_.expire(f"count:{url}", 10)
         html = method(url)
-        redis_.setex(f"cached:{url}", 10, html)
         return html
 
     return wrapper
